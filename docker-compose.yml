@@ -5,10 +5,27 @@ services:
       context: .
     ports:
       - "8000:8000"
+    depends_on:
+      - dynamodb  # Ensure DynamoDB is up before the app starts
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
     environment:
       NODE_ENV: development
+      DYNAMODB_ENDPOINT: http://dynamodb:8000
     command:
       ["npx", "ts-node-dev", "--respawn", "--transpile-only", "src/index.ts"]
+    networks:
+      - app-network  # Define a network if required
+   
+  # DynamoDB Local service
+  dynamodb:
+    image: amazon/dynamodb-local
+    ports:
+      - "8080:8000"  # Expose the DynamoDB local port
+    networks:
+      - app-network  # Make DynamoDB local available on the same network
+
+networks:
+  app-network:
+    driver: bridge
