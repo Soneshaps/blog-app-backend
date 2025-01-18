@@ -1,7 +1,8 @@
-import express, { Application, Request, Response, NextFunction } from 'express'
+import express, { Application, Request, Response } from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import articleRoutes from './routes/article.routes'
+import logger from './utils/logger'
 
 const app: Application = express()
 const port = 8000
@@ -14,7 +15,7 @@ app.use(cors())
 app.use('/articles', articleRoutes)
 
 // Error Handling Middleware
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+app.use((err: any, req: Request, res: Response) => {
     const statusCode = err.status || 500
     res.status(statusCode).json({
         error: {
@@ -24,5 +25,5 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 })
 
 app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`)
+    logger.info(`Server is running on http://localhost:${port}`)
 })

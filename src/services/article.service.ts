@@ -7,6 +7,7 @@ import {
     listArticlesByUser,
     listAllArticlesSortedByDate,
 } from '../models/article.model'
+import logger from '../utils/logger'
 
 /**
  * Create a new Article
@@ -16,22 +17,25 @@ export async function createArticle(
     title: string,
     content: string
 ) {
-    // 1) Validate input, or do any business logic needed
     if (!userId || !title || !content) {
+        logger.info('Missing Required field to create a new article')
         throw new Error('Missing required fields.')
     }
 
-    // 2) Generate unique articleId & timestamps
-    const articleId = uuidv4()
-    const now = new Date().toISOString()
+    logger.info('Generating unique articleId and timestamp')
 
-    // 3) Call the model to persist in DynamoDB
+    const articleId = uuidv4()
+    const timestamp = new Date().toISOString()
+
+    logger.info('Inserting a new article row in table')
     const item = await createArticleItem(userId, articleId, {
         title,
         content,
-        createdAt: now,
-        updatedAt: now,
+        createdAt: timestamp,
+        updatedAt: timestamp,
     })
+
+    logger.info('Successfully created a new article :', item)
 
     return item
 }
@@ -41,8 +45,10 @@ export async function createArticle(
  */
 export async function getArticle(userId: string, articleId: string) {
     if (!userId || !articleId) {
-        throw new Error('Missing userId or articleId.')
+        logger.error('Missing Required field to create a new article')
     }
+    logger.info('Fetching a article for id: ', articleId)
+
     return await getArticleItem(userId, articleId)
 }
 
@@ -56,8 +62,11 @@ export async function updateArticle(
     content: string
 ) {
     if (!userId || !articleId || !title || !content) {
+        logger.error('Missing Required field to update the article')
         throw new Error('Missing required fields.')
     }
+
+    logger.info('Updating a article for id: ', articleId)
     return await updateArticleItem(userId, articleId, { title, content })
 }
 
@@ -66,8 +75,11 @@ export async function updateArticle(
  */
 export async function deleteArticle(userId: string, articleId: string) {
     if (!userId || !articleId) {
+        logger.error('Missing Required field to delete the article')
         throw new Error('Missing userId or articleId.')
     }
+    logger.info('Deleting a article for id: ', articleId)
+
     await deleteArticleItem(userId, articleId)
 }
 
@@ -76,13 +88,18 @@ export async function deleteArticle(userId: string, articleId: string) {
  */
 export async function listArticles(userId: string) {
     if (!userId) {
+        logger.error('Missing Required field to fetch the articles')
+
         throw new Error('Missing userId.')
     }
+    logger.info('Listing a article for userId: ', userId)
+
     return await listArticlesByUser(userId)
 }
 
 export async function listArticlesGlobalByDate() {
-    // Any business logic you want here.
-    // E.g., authentication checks, or limiting results.
+    // TODO: limiting results.
+    logger.info('Listing all articles')
+
     return await listAllArticlesSortedByDate()
 }
