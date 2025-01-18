@@ -1,7 +1,7 @@
 import express, { Application, Request, Response, NextFunction } from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
-import articleRoutes from './routes/articleRoutes'
+import articleRoutes from './routes/article.routes'
 
 const app: Application = express()
 const port = 8000
@@ -11,7 +11,7 @@ app.use(bodyParser.json())
 app.use(cors())
 
 // Routes
-app.use('/api/article', articleRoutes)
+app.use('/articles', articleRoutes)
 
 // Error Handling Middleware
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
