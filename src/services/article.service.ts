@@ -17,39 +17,50 @@ export async function createArticle(
     title: string,
     content: string
 ) {
-    if (!userId || !title || !content) {
-        logger.info('Missing Required field to create a new article')
-        throw new Error('Missing required fields.')
+    try {
+        if (!userId || !title || !content) {
+            logger.info('Missing Required field to create a new article')
+            throw new Error('Missing required fields.')
+        }
+        logger.info('Creating a new article for userId:', { userId })
+
+        logger.info('Generating unique articleId and timestamp')
+
+        const articleId = uuidv4()
+        const timestamp = new Date().toISOString()
+
+        logger.info('Inserting a new article row in table')
+        const item = await createArticleItem(userId, articleId, {
+            title,
+            content,
+            createdAt: timestamp,
+            updatedAt: timestamp,
+        })
+
+        logger.info('Successfully created a new article :', item)
+
+        return item
+    } catch (err) {
+        logger.error('Failed to Create a new article:', err)
+        throw new Error('Failed to Create a new article')
     }
-
-    logger.info('Generating unique articleId and timestamp')
-
-    const articleId = uuidv4()
-    const timestamp = new Date().toISOString()
-
-    logger.info('Inserting a new article row in table')
-    const item = await createArticleItem(userId, articleId, {
-        title,
-        content,
-        createdAt: timestamp,
-        updatedAt: timestamp,
-    })
-
-    logger.info('Successfully created a new article :', item)
-
-    return item
 }
 
 /**
  * Get a single article
  */
 export async function getArticle(userId: string, articleId: string) {
-    if (!userId || !articleId) {
-        logger.error('Missing Required field to create a new article')
-    }
-    logger.info('Fetching a article for id: ', articleId)
+    try {
+        if (!userId || !articleId) {
+            logger.error('Missing Required field to create a new article')
+        }
+        logger.info('Fetching a article for id: ', { articleId })
 
-    return await getArticleItem(userId, articleId)
+        return await getArticleItem(userId, articleId)
+    } catch (err) {
+        logger.error('Failed to fetch article for user:', err)
+        throw new Error('Failed to fetch article for user')
+    }
 }
 
 /**
@@ -61,45 +72,65 @@ export async function updateArticle(
     title: string,
     content: string
 ) {
-    if (!userId || !articleId || !title || !content) {
-        logger.error('Missing Required field to update the article')
-        throw new Error('Missing required fields.')
-    }
+    try {
+        if (!userId || !articleId || !title || !content) {
+            logger.error('Missing Required field to update the article')
+            throw new Error('Missing required fields.')
+        }
 
-    logger.info('Updating a article for id: ', articleId)
-    return await updateArticleItem(userId, articleId, { title, content })
+        logger.info('Updating a article for id: ', { articleId })
+        return await updateArticleItem(userId, articleId, { title, content })
+    } catch (err) {
+        logger.error('Failed to update the article:', err)
+        throw new Error('Failed to update the article')
+    }
 }
 
 /**
  * Delete an article
  */
 export async function deleteArticle(userId: string, articleId: string) {
-    if (!userId || !articleId) {
-        logger.error('Missing Required field to delete the article')
-        throw new Error('Missing userId or articleId.')
-    }
-    logger.info('Deleting a article for id: ', articleId)
+    try {
+        if (!userId || !articleId) {
+            logger.error('Missing Required field to delete the article')
+            throw new Error('Missing userId or articleId.')
+        }
+        logger.info('Deleting a article for id: ', { articleId })
 
-    await deleteArticleItem(userId, articleId)
+        await deleteArticleItem(userId, articleId)
+    } catch (err) {
+        logger.error('Failed to delete the article:', err)
+        throw new Error('Failed to delete the article')
+    }
 }
 
 /**
  * List all articles for a user
  */
 export async function listArticles(userId: string) {
-    if (!userId) {
-        logger.error('Missing Required field to fetch the articles')
+    try {
+        if (!userId) {
+            logger.error('Missing Required field to fetch the articles')
 
-        throw new Error('Missing userId.')
+            throw new Error('Missing userId.')
+        }
+        logger.info('Listing a article for userId: ', { userId })
+
+        return await listArticlesByUser(userId)
+    } catch (err) {
+        logger.error('Failed to fetch all article for the user:', err)
+        throw new Error('Failed to fetch all article for the user')
     }
-    logger.info('Listing a article for userId: ', userId)
-
-    return await listArticlesByUser(userId)
 }
 
 export async function listArticlesGlobalByDate() {
-    // TODO: limiting results.
-    logger.info('Listing all articles')
+    try {
+        // TODO: limiting results.
+        logger.info('Listing all articles')
 
-    return await listAllArticlesSortedByDate()
+        return await listAllArticlesSortedByDate()
+    } catch (err) {
+        logger.error('Failed to fetch global article:', err)
+        throw new Error('Failed to fetch global article')
+    }
 }
