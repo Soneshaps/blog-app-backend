@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 8000
 
 # Use ts-node-dev for hot reloading
-CMD ["npx", "ts-node-dev", "--respawn", "--transpile-only", "src/index.ts"]
+CMD ["npx", "ts-node-dev", "--respawn", "--transpile-only", "src/main.ts"]

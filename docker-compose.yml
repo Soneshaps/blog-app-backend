@@ -1,4 +1,3 @@
-version: "3.8"
 services:
   backend:
     build:
@@ -6,25 +5,34 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - dynamodb  # Ensure DynamoDB is up before the app starts
+      - dynamodb 
+      - redis
     volumes:
       - .:/usr/src/app
-      - /usr/src/app/node_modules
     environment:
       NODE_ENV: development
       DYNAMODB_ENDPOINT: http://dynamodb:8000
+      REDIS_HOST: "redis"
+      REDIS_PORT: 6379
     command:
-      ["npx", "ts-node-dev", "--respawn", "--transpile-only", "src/index.ts"]
+      ["npx", "ts-node-dev", "--respawn", "--transpile-only", "src/main.ts"]
     networks:
-      - app-network  # Define a network if required
+      - app-network
    
   # DynamoDB Local service
   dynamodb:
     image: amazon/dynamodb-local
     ports:
-      - "8080:8000"  # Expose the DynamoDB local port
+      - "8080:8000"
     networks:
-      - app-network  # Make DynamoDB local available on the same network
+      - app-network
+  
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
 
 networks:
   app-network:
