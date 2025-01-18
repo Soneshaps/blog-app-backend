@@ -8,6 +8,7 @@ import {
     listAllArticlesSortedByDate,
 } from '../models/article.model'
 import logger from '../utils/logger'
+import { redisClient } from '../utils/redisClient'
 
 /**
  * Create a new Article
@@ -54,9 +55,27 @@ export async function getArticle(userId: string, articleId: string) {
         if (!userId || !articleId) {
             logger.error('Missing Required field to create a new article')
         }
+
+        const cacheKey = `article:${articleId}`
+
+        // Check cacheKey in cache
+        const cached = await redisClient.get(cacheKey)
+        if (cached) {
+            logger.info('Fetching a article for cache', { cacheKey })
+
+            return JSON.parse(cached)
+        }
+
         logger.info('Fetching a article for id: ', { articleId })
 
-        return await getArticleItem(userId, articleId)
+        const article = await getArticleItem(userId, articleId)
+
+        // Store in cache
+        await redisClient.set(cacheKey, JSON.stringify(article), {
+            EX: 3600, // 1 hour
+        })
+
+        return article
     } catch (err) {
         logger.error('Failed to fetch article for user:', err)
         throw new Error('Failed to fetch article for user')
@@ -79,7 +98,17 @@ export async function updateArticle(
         }
 
         logger.info('Updating a article for id: ', { articleId })
-        return await updateArticleItem(userId, articleId, { title, content })
+        const updated = await updateArticleItem(userId, articleId, {
+            title,
+            content,
+        })
+
+        if (updated) {
+            const cacheKey = `article:${articleId}`
+            await redisClient.del(cacheKey)
+        }
+
+        return updated
     } catch (err) {
         logger.error('Failed to update the article:', err)
         throw new Error('Failed to update the article')
