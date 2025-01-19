@@ -1,0 +1,871 @@
+{
+    "info": {
+        "_postman_id": "7fa183e0-c51a-429c-a2b0-1d723da8473c",
+        "name": "Blog",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "_exporter_id": "16088156"
+    },
+    "item": [
+        {
+            "name": "Auth",
+            "item": [
+                {
+                    "name": "Login",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"email\": \"sonesh@gmail.com\",\n    \"password\": \"password@123\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:8000/auth/login",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "8000",
+                            "path": ["auth", "login"]
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "400",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"email\": \"sonesh@gmail.com\",\n    \"password\": \"passwor@123\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/auth/login",
+                                    "protocol": "http",
+                                    "host": ["localhost"],
+                                    "port": "8000",
+                                    "path": ["auth", "login"]
+                                }
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "X-Powered-By",
+                                    "value": "Express"
+                                },
+                                {
+                                    "key": "Access-Control-Allow-Origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json; charset=utf-8"
+                                },
+                                {
+                                    "key": "Content-Length",
+                                    "value": "71"
+                                },
+                                {
+                                    "key": "ETag",
+                                    "value": "W/\"47-SBHn3lya40oa4YC6N4foMc1c3d0\""
+                                },
+                                {
+                                    "key": "Date",
+                                    "value": "Sun, 19 Jan 2025 17:33:42 GMT"
+                                },
+                                {
+                                    "key": "Connection",
+                                    "value": "keep-alive"
+                                },
+                                {
+                                    "key": "Keep-Alive",
+                                    "value": "timeout=5"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"success\": false,\n    \"data\": null,\n    \"error\": {\n        \"message\": \"Invalid credentials\"\n    }\n}"
+                        },
+                        {
+                            "name": "200",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"email\": \"sonesh@gmail.com\",\n    \"password\": \"password@123\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/auth/login",
+                                    "protocol": "http",
+                                    "host": ["localhost"],
+                                    "port": "8000",
+                                    "path": ["auth", "login"]
+                                }
+                            },
+                            "status": "Created",
+                            "code": 201,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "X-Powered-By",
+                                    "value": "Express"
+                                },
+                                {
+                                    "key": "Access-Control-Allow-Origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json; charset=utf-8"
+                                },
+                                {
+                                    "key": "Content-Length",
+                                    "value": "268"
+                                },
+                                {
+                                    "key": "ETag",
+                                    "value": "W/\"10c-PYnaVsSDAZdnc6L/m+7yXymeKXo\""
+                                },
+                                {
+                                    "key": "Date",
+                                    "value": "Sun, 19 Jan 2025 20:08:53 GMT"
+                                },
+                                {
+                                    "key": "Connection",
+                                    "value": "keep-alive"
+                                },
+                                {
+                                    "key": "Keep-Alive",
+                                    "value": "timeout=5"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"success\": true,\n    \"data\": {\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMzI1ZTVjMy1lM2YyLTRkMTUtODkwNC03OTM3ZDg4ZjIwZTciLCJ1c2VybmFtZSI6InNvbmVzaCIsImlhdCI6MTczNzMxNzMzMywiZXhwIjoxNzM3MzIwOTMzfQ.QYIC9bfGu0ZAP5cCOfw5HzuZOcYc6Ifdo-xkO7fltTI\"\n    },\n    \"error\": null\n}"
+                        }
+                    ]
+                },
+                {
+                    "name": "Create new User",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"username\": \"sonesh\",\n  \"email\": \"sonesh@gmail.com\",\n  \"password\": \"password@123\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:8000/auth/createUser",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "8000",
+                            "path": ["auth", "createUser"]
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "201",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"username\": \"sonesh\",\n  \"email\": \"sonesh@gmail.com\",\n  \"password\": \"password@123\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/auth/createUser",
+                                    "protocol": "http",
+                                    "host": ["localhost"],
+                                    "port": "8000",
+                                    "path": ["auth", "createUser"]
+                                }
+                            },
+                            "status": "Created",
+                            "code": 201,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "X-Powered-By",
+                                    "value": "Express"
+                                },
+                                {
+                                    "key": "Access-Control-Allow-Origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json; charset=utf-8"
+                                },
+                                {
+                                    "key": "Content-Length",
+                                    "value": "78"
+                                },
+                                {
+                                    "key": "ETag",
+                                    "value": "W/\"4e-pzqtrs0Lw0SyFn6hrAg0pntdaJs\""
+                                },
+                                {
+                                    "key": "Date",
+                                    "value": "Sun, 19 Jan 2025 20:05:53 GMT"
+                                },
+                                {
+                                    "key": "Connection",
+                                    "value": "keep-alive"
+                                },
+                                {
+                                    "key": "Keep-Alive",
+                                    "value": "timeout=5"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"success\": true,\n    \"data\": {\n        \"message\": \"Successfully Created a user\"\n    },\n    \"error\": null\n}"
+                        },
+                        {
+                            "name": "400",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"username\": \"sonesh\",\n  \"email\": \"sonesh@gmail.com\",\n  \"password\": \"password@123\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/auth/createUser",
+                                    "protocol": "http",
+                                    "host": ["localhost"],
+                                    "port": "8000",
+                                    "path": ["auth", "createUser"]
+                                }
+                            },
+                            "status": "Bad Request",
+                            "code": 400,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "X-Powered-By",
+                                    "value": "Express"
+                                },
+                                {
+                                    "key": "Access-Control-Allow-Origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json; charset=utf-8"
+                                },
+                                {
+                                    "key": "Content-Length",
+                                    "value": "71"
+                                },
+                                {
+                                    "key": "ETag",
+                                    "value": "W/\"47-yf4/m+qqMYqKowhTc3RWc3cshgU\""
+                                },
+                                {
+                                    "key": "Date",
+                                    "value": "Sun, 19 Jan 2025 20:06:39 GMT"
+                                },
+                                {
+                                    "key": "Connection",
+                                    "value": "keep-alive"
+                                },
+                                {
+                                    "key": "Keep-Alive",
+                                    "value": "timeout=5"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"success\": false,\n    \"data\": null,\n    \"error\": {\n        \"message\": \"User already exists\"\n    }\n}"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Articles",
+            "item": [
+                {
+                    "name": "Create a New Article",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMzI1ZTVjMy1lM2YyLTRkMTUtODkwNC03OTM3ZDg4ZjIwZTciLCJ1c2VybmFtZSI6InNvbmVzaCIsImlhdCI6MTczNzMxNzMzMywiZXhwIjoxNzM3MzIwOTMzfQ.QYIC9bfGu0ZAP5cCOfw5HzuZOcYc6Ifdo-xkO7fltTI",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"userId\": \"123\",\n  \"title\": \"Hello World!\",\n  \"content\": \"My first blog post!\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:8000/articles/",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "8000",
+                            "path": ["articles", ""]
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "201",
+                            "originalRequest": {
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"userId\": \"123\",\n  \"title\": \"Hello World!\",\n  \"content\": \"My first blog post!\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/articles/",
+                                    "protocol": "http",
+                                    "host": ["localhost"],
+                                    "port": "8000",
+                                    "path": ["articles", ""]
+                                }
+                            },
+                            "status": "Created",
+                            "code": 201,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "X-Powered-By",
+                                    "value": "Express"
+                                },
+                                {
+                                    "key": "Access-Control-Allow-Origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json; charset=utf-8"
+                                },
+                                {
+                                    "key": "Content-Length",
+                                    "value": "307"
+                                },
+                                {
+                                    "key": "ETag",
+                                    "value": "W/\"133-hDEoAHROuVKtS9R8dqCOuFYEWew\""
+                                },
+                                {
+                                    "key": "Date",
+                                    "value": "Sun, 19 Jan 2025 20:11:15 GMT"
+                                },
+                                {
+                                    "key": "Connection",
+                                    "value": "keep-alive"
+                                },
+                                {
+                                    "key": "Keep-Alive",
+                                    "value": "timeout=5"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"success\": true,\n    \"data\": {\n        \"PK\": \"USER#123\",\n        \"SK\": \"ARTICLE#3af3211d-5c15-4628-8fc9-766b20b82b7a\",\n        \"type\": \"Article\",\n        \"articleId\": \"3af3211d-5c15-4628-8fc9-766b20b82b7a\",\n        \"title\": \"Hello World!\",\n        \"content\": \"My first blog post!\",\n        \"createdAt\": \"2025-01-19T20:11:15.408Z\",\n        \"updatedAt\": \"2025-01-19T20:11:15.408Z\"\n    },\n    \"error\": null\n}"
+                        }
+                    ]
+                },
+                {
+                    "name": "Get Article For User",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8000/articles/1234231235/e4cb94ea-2395-43d5-8e7e-c861be2b4945",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "8000",
+                            "path": [
+                                "articles",
+                                "1234231235",
+                                "e4cb94ea-2395-43d5-8e7e-c861be2b4945"
+                            ]
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "200",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "http://localhost:8000/articles/123/3af3211d-5c15-4628-8fc9-766b20b82b7a",
+                                    "protocol": "http",
+                                    "host": ["localhost"],
+                                    "port": "8000",
+                                    "path": [
+                                        "articles",
+                                        "123",
+                                        "3af3211d-5c15-4628-8fc9-766b20b82b7a"
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "X-Powered-By",
+                                    "value": "Express"
+                                },
+                                {
+                                    "key": "Access-Control-Allow-Origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json; charset=utf-8"
+                                },
+                                {
+                                    "key": "Content-Length",
+                                    "value": "307"
+                                },
+                                {
+                                    "key": "ETag",
+                                    "value": "W/\"133-5Fd9S/pK59Wk/vbc8eybcnCNKCI\""
+                                },
+                                {
+                                    "key": "Date",
+                                    "value": "Sun, 19 Jan 2025 20:12:33 GMT"
+                                },
+                                {
+                                    "key": "Connection",
+                                    "value": "keep-alive"
+                                },
+                                {
+                                    "key": "Keep-Alive",
+                                    "value": "timeout=5"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"success\": true,\n    \"data\": {\n        \"createdAt\": \"2025-01-19T20:11:15.408Z\",\n        \"SK\": \"ARTICLE#3af3211d-5c15-4628-8fc9-766b20b82b7a\",\n        \"articleId\": \"3af3211d-5c15-4628-8fc9-766b20b82b7a\",\n        \"PK\": \"USER#123\",\n        \"type\": \"Article\",\n        \"title\": \"Hello World!\",\n        \"content\": \"My first blog post!\",\n        \"updatedAt\": \"2025-01-19T20:11:15.408Z\"\n    },\n    \"error\": null\n}"
+                        },
+                        {
+                            "name": "400",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "http://localhost:8000/articles/123/3af3211d-5c15-4628-8fc9-766b20b82b",
+                                    "protocol": "http",
+                                    "host": ["localhost"],
+                                    "port": "8000",
+                                    "path": [
+                                        "articles",
+                                        "123",
+                                        "3af3211d-5c15-4628-8fc9-766b20b82b"
+                                    ]
+                                }
+                            },
+                            "status": "Internal Server Error",
+                            "code": 500,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "X-Powered-By",
+                                    "value": "Express"
+                                },
+                                {
+                                    "key": "Access-Control-Allow-Origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json; charset=utf-8"
+                                },
+                                {
+                                    "key": "Content-Length",
+                                    "value": "84"
+                                },
+                                {
+                                    "key": "ETag",
+                                    "value": "W/\"54-5y3P4upTiHrU89vGJHuK2WjFnGQ\""
+                                },
+                                {
+                                    "key": "Date",
+                                    "value": "Sun, 19 Jan 2025 20:13:49 GMT"
+                                },
+                                {
+                                    "key": "Connection",
+                                    "value": "keep-alive"
+                                },
+                                {
+                                    "key": "Keep-Alive",
+                                    "value": "timeout=5"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"success\": false,\n    \"data\": null,\n    \"error\": {\n        \"message\": \"Failed to fetch article for user\"\n    }\n}"
+                        }
+                    ]
+                },
+                {
+                    "name": "Update Article",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMzI1ZTVjMy1lM2YyLTRkMTUtODkwNC03OTM3ZDg4ZjIwZTciLCJ1c2VybmFtZSI6InNvbmVzaCIsImlhdCI6MTczNzMxNzMzMywiZXhwIjoxNzM3MzIwOTMzfQ.QYIC9bfGu0ZAP5cCOfw5HzuZOcYc6Ifdo-xkO7fltTI",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"userId\": \"123\",\n  \"title\": \"Hello World 333223\",\n  \"content\": \"My second blog post!\",\n  \"articleId\": \"3af3211d-5c15-4628-8fc9-766b20b82b7a\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "http://localhost:8000/articles/",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "8000",
+                            "path": ["articles", ""]
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "200",
+                            "originalRequest": {
+                                "method": "PUT",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n  \"userId\": \"123\",\n  \"title\": \"Hello World 333223\",\n  \"content\": \"My second blog post!\",\n  \"articleId\": \"3af3211d-5c15-4628-8fc9-766b20b82b7a\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "http://localhost:8000/articles/",
+                                    "protocol": "http",
+                                    "host": ["localhost"],
+                                    "port": "8000",
+                                    "path": ["articles", ""]
+                                }
+                            },
+                            "status": "Created",
+                            "code": 201,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "X-Powered-By",
+                                    "value": "Express"
+                                },
+                                {
+                                    "key": "Access-Control-Allow-Origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json; charset=utf-8"
+                                },
+                                {
+                                    "key": "Content-Length",
+                                    "value": "314"
+                                },
+                                {
+                                    "key": "ETag",
+                                    "value": "W/\"13a-u6LDQVcI/J1s6SsLOnQ5U8V4jCo\""
+                                },
+                                {
+                                    "key": "Date",
+                                    "value": "Sun, 19 Jan 2025 20:15:58 GMT"
+                                },
+                                {
+                                    "key": "Connection",
+                                    "value": "keep-alive"
+                                },
+                                {
+                                    "key": "Keep-Alive",
+                                    "value": "timeout=5"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"success\": true,\n    \"data\": {\n        \"createdAt\": \"2025-01-19T20:11:15.408Z\",\n        \"SK\": \"ARTICLE#3af3211d-5c15-4628-8fc9-766b20b82b7a\",\n        \"articleId\": \"3af3211d-5c15-4628-8fc9-766b20b82b7a\",\n        \"PK\": \"USER#123\",\n        \"title\": \"Hello World 333223\",\n        \"type\": \"Article\",\n        \"content\": \"My second blog post!\",\n        \"updatedAt\": \"2025-01-19T20:15:58.349Z\"\n    },\n    \"error\": null\n}"
+                        }
+                    ]
+                },
+                {
+                    "name": "Delete Article",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8000/articles/1234231235111/6ef8b556-1406-4423-b3a1-df413c067047",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "8000",
+                            "path": [
+                                "articles",
+                                "1234231235111",
+                                "6ef8b556-1406-4423-b3a1-df413c067047"
+                            ]
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "200",
+                            "originalRequest": {
+                                "method": "DELETE",
+                                "header": [],
+                                "url": {
+                                    "raw": "http://localhost:8000/articles/123/3af3211d-5c15-4628-8fc9-766b20b82b7a",
+                                    "protocol": "http",
+                                    "host": ["localhost"],
+                                    "port": "8000",
+                                    "path": [
+                                        "articles",
+                                        "123",
+                                        "3af3211d-5c15-4628-8fc9-766b20b82b7a"
+                                    ]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "X-Powered-By",
+                                    "value": "Express"
+                                },
+                                {
+                                    "key": "Access-Control-Allow-Origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json; charset=utf-8"
+                                },
+                                {
+                                    "key": "Content-Length",
+                                    "value": "79"
+                                },
+                                {
+                                    "key": "ETag",
+                                    "value": "W/\"4f-25UcOD1SDMavuEdYMoSXoa4EJSU\""
+                                },
+                                {
+                                    "key": "Date",
+                                    "value": "Sun, 19 Jan 2025 20:17:46 GMT"
+                                },
+                                {
+                                    "key": "Connection",
+                                    "value": "keep-alive"
+                                },
+                                {
+                                    "key": "Keep-Alive",
+                                    "value": "timeout=5"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"success\": true,\n    \"data\": {\n        \"message\": \"Article Deleted Successfully\"\n    },\n    \"error\": null\n}"
+                        }
+                    ]
+                },
+                {
+                    "name": "List All Articles for user",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMzI1ZTVjMy1lM2YyLTRkMTUtODkwNC03OTM3ZDg4ZjIwZTciLCJ1c2VybmFtZSI6InNvbmVzaCIsImlhdCI6MTczNzMxNzMzMywiZXhwIjoxNzM3MzIwOTMzfQ.QYIC9bfGu0ZAP5cCOfw5HzuZOcYc6Ifdo-xkO7fltTI",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8000/articles/all/123",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "8000",
+                            "path": ["articles", "all", "123"]
+                        }
+                    },
+                    "response": [
+                        {
+                            "name": "200",
+                            "originalRequest": {
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "http://localhost:8000/articles/all/123",
+                                    "protocol": "http",
+                                    "host": ["localhost"],
+                                    "port": "8000",
+                                    "path": ["articles", "all", "123"]
+                                }
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "_postman_previewlanguage": "json",
+                            "header": [
+                                {
+                                    "key": "X-Powered-By",
+                                    "value": "Express"
+                                },
+                                {
+                                    "key": "Access-Control-Allow-Origin",
+                                    "value": "*"
+                                },
+                                {
+                                    "key": "Content-Type",
+                                    "value": "application/json; charset=utf-8"
+                                },
+                                {
+                                    "key": "Content-Length",
+                                    "value": "477"
+                                },
+                                {
+                                    "key": "ETag",
+                                    "value": "W/\"1dd-UtaIcesclHLQTtmL66U011OcxYU\""
+                                },
+                                {
+                                    "key": "Date",
+                                    "value": "Sun, 19 Jan 2025 20:18:25 GMT"
+                                },
+                                {
+                                    "key": "Connection",
+                                    "value": "keep-alive"
+                                },
+                                {
+                                    "key": "Keep-Alive",
+                                    "value": "timeout=5"
+                                }
+                            ],
+                            "cookie": [],
+                            "body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"SK\": \"ARTICLE#3af3211d-5c15-4628-8fc9-766b20b82\",\n            \"PK\": \"USER#123\",\n            \"title\": \"Hello World 333223\",\n            \"content\": \"My second blog post!\",\n            \"updatedAt\": \"2025-01-19T20:17:10.981Z\"\n        },\n        {\n            \"createdAt\": \"2025-01-19T20:11:15.022Z\",\n            \"SK\": \"ARTICLE#75f552eb-cd6e-4208-bd4c-dae773876d5c\",\n            \"articleId\": \"75f552eb-cd6e-4208-bd4c-dae773876d5c\",\n            \"PK\": \"USER#123\",\n            \"type\": \"Article\",\n            \"title\": \"Hello World!\",\n            \"content\": \"My first blog post!\",\n            \"updatedAt\": \"2025-01-19T20:11:15.022Z\"\n        }\n    ],\n    \"error\": null\n}"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "List All Articles Global",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:8000/articles/global",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "8000",
+                    "path": ["articles", "global"]
+                }
+            },
+            "response": [
+                {
+                    "name": "200",
+                    "originalRequest": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8000/articles/global",
+                            "protocol": "http",
+                            "host": ["localhost"],
+                            "port": "8000",
+                            "path": ["articles", "global"]
+                        }
+                    },
+                    "status": "OK",
+                    "code": 200,
+                    "_postman_previewlanguage": "json",
+                    "header": [
+                        {
+                            "key": "X-Powered-By",
+                            "value": "Express"
+                        },
+                        {
+                            "key": "Access-Control-Allow-Origin",
+                            "value": "*"
+                        },
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json; charset=utf-8"
+                        },
+                        {
+                            "key": "Content-Length",
+                            "value": "309"
+                        },
+                        {
+                            "key": "ETag",
+                            "value": "W/\"135-n/0OjC2G+deGyN4Jdq2tgjlMz78\""
+                        },
+                        {
+                            "key": "Date",
+                            "value": "Sun, 19 Jan 2025 20:18:46 GMT"
+                        },
+                        {
+                            "key": "Connection",
+                            "value": "keep-alive"
+                        },
+                        {
+                            "key": "Keep-Alive",
+                            "value": "timeout=5"
+                        }
+                    ],
+                    "cookie": [],
+                    "body": "{\n    \"success\": true,\n    \"data\": [\n        {\n            \"createdAt\": \"2025-01-19T20:11:15.022Z\",\n            \"SK\": \"ARTICLE#75f552eb-cd6e-4208-bd4c-dae773876d5c\",\n            \"articleId\": \"75f552eb-cd6e-4208-bd4c-dae773876d5c\",\n            \"PK\": \"USER#123\",\n            \"type\": \"Article\",\n            \"title\": \"Hello World!\",\n            \"content\": \"My first blog post!\",\n            \"updatedAt\": \"2025-01-19T20:11:15.022Z\"\n        }\n    ],\n    \"error\": null\n}"
+                }
+            ]
+        }
+    ]
+}
