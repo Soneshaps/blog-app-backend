@@ -1,13 +1,13 @@
 import AWS from 'aws-sdk'
 
-const dynamoDb = new AWS.DynamoDB.DocumentClient({
+export const dynamoDb = new AWS.DynamoDB.DocumentClient({
     endpoint: process.env.DYNAMODB_ENDPOINT || 'http://localhost:8000',
     region: process.env.AWS_REGION || 'us-west-2',
     accessKeyId: process.env.AWS_ACCESS_KEY_ID || 'fake',
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || 'fake',
 })
 
-const TABLE_NAME = 'BlogApp'
+export const TABLE_NAME = 'BlogApp'
 
 /**
  * Utility to build the Partition Key for a user.

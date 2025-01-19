@@ -15,6 +15,7 @@ const tableParams: AWS.DynamoDB.CreateTableInput = {
         { AttributeName: 'SK', AttributeType: 'S' },
 
         // GSI attributes
+        { AttributeName: 'email', AttributeType: 'S' },
         { AttributeName: 'type', AttributeType: 'S' },
         { AttributeName: 'createdAt', AttributeType: 'S' },
     ],
@@ -28,6 +29,22 @@ const tableParams: AWS.DynamoDB.CreateTableInput = {
             KeySchema: [
                 { AttributeName: 'type', KeyType: 'HASH' }, // Partition Key for GSI
                 { AttributeName: 'createdAt', KeyType: 'RANGE' }, // Sort Key for GSI
+            ],
+            Projection: {
+                ProjectionType: 'ALL',
+            },
+            ProvisionedThroughput: {
+                ReadCapacityUnits: 5,
+                WriteCapacityUnits: 5,
+            },
+        },
+        {
+            IndexName: 'GSI_UserEmail',
+            KeySchema: [
+                {
+                    AttributeName: 'email',
+                    KeyType: 'HASH', // Partition key for the index
+                },
             ],
             Projection: {
                 ProjectionType: 'ALL',

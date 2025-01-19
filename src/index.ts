@@ -2,6 +2,8 @@ import express, { Application, Request, Response } from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import articleRoutes from './routes/article.routes'
+import authRoutes from './routes/auth.routes'
+
 import logger from './utils/logger'
 import { connectRedis } from './utils/redisClient'
 
@@ -14,6 +16,8 @@ app.use(cors())
 
 // Routes
 app.use('/articles', articleRoutes)
+
+app.use('/auth', authRoutes)
 
 // Error Handling Middleware
 app.use((err: any, req: Request, res: Response) => {
