@@ -109,9 +109,6 @@ export async function updateArticle(
             throw new AppError('Missing required fields.', 400)
         }
 
-        logger.info('Verify a article exist for id: ', { articleId })
-        await getArticle(userId, articleId)
-
         logger.info('Updating a article for id: ', { articleId })
         const updated = await updateArticleItem(userId, articleId, {
             title,
@@ -142,9 +139,6 @@ export async function deleteArticle(userId: string, articleId: string) {
             logger.error('Missing Required field to delete the article')
             throw new AppError('Missing userId or articleId.', 400)
         }
-
-        logger.info('Verify a article exist for id: ', { articleId })
-        await getArticle(userId, articleId)
 
         logger.info('Deleting a article for id: ', { articleId })
 
