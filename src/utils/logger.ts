@@ -17,6 +17,7 @@ const customFormat = format.printf(({ timestamp, level, message, ...meta }) => {
 const logger = createLogger({
     levels,
     level: 'info',
+    silent: process.env.NODE_ENV === 'test',
     format: format.combine(format.timestamp(), customFormat),
     transports: [
         new transports.Console(),
