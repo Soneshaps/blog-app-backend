@@ -66,7 +66,7 @@ export async function getArticle(userId: string, articleId: string) {
             return JSON.parse(cached)
         }
 
-        logger.info('Fetching a article for id: ', { articleId })
+        logger.info('Fetching a article for id: ', { articleId, userId })
 
         const article = await getArticleItem(userId, articleId)
 
@@ -97,6 +97,9 @@ export async function updateArticle(
             throw new Error('Missing required fields.')
         }
 
+        logger.info('Verify a article exist for id: ', { articleId })
+        await getArticle(userId, articleId)
+
         logger.info('Updating a article for id: ', { articleId })
         const updated = await updateArticleItem(userId, articleId, {
             title,
@@ -124,9 +127,20 @@ export async function deleteArticle(userId: string, articleId: string) {
             logger.error('Missing Required field to delete the article')
             throw new Error('Missing userId or articleId.')
         }
+
+        logger.info('Verify a article exist for id: ', { articleId })
+        await getArticle(userId, articleId)
+
         logger.info('Deleting a article for id: ', { articleId })
 
         await deleteArticleItem(userId, articleId)
+
+        const cacheKey = `article:${articleId}`
+        await redisClient.del(cacheKey)
+
+        logger.info('Deleted article Successfully', { articleId })
+
+        return { message: 'Article Deleted Successfully' }
     } catch (err) {
         logger.error('Failed to delete the article:', err)
         throw new Error('Failed to delete the article')
@@ -143,7 +157,7 @@ export async function listArticles(userId: string) {
 
             throw new Error('Missing userId.')
         }
-        logger.info('Listing a article for userId: ', { userId })
+        logger.info('Listing all article for userId: ', { userId })
 
         return await listArticlesByUser(userId)
     } catch (err) {

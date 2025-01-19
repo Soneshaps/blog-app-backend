@@ -27,6 +27,7 @@ export async function getArticleController(
 ): Promise<any> {
     try {
         const { userId, articleId } = req.params
+
         const item = await getArticle(userId, articleId)
         if (!item) {
             return res.status(404).json({ error: 'Article not found.' })
@@ -42,8 +43,7 @@ export async function updateArticleController(
     res: Response
 ): Promise<any> {
     try {
-        const { userId, articleId } = req.params
-        const { title, content } = req.body
+        const { title, content, userId, articleId } = req.body
         const updatedItem = await updateArticle(
             userId,
             articleId,
@@ -62,8 +62,9 @@ export async function deleteArticleController(
 ): Promise<any> {
     try {
         const { userId, articleId } = req.params
-        await deleteArticle(userId, articleId)
-        return res.status(204).send()
+        const response = await deleteArticle(userId, articleId)
+
+        return res.status(200).json(response)
     } catch (error: any) {
         return res.status(400).json({ error: error.message })
     }
