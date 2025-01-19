@@ -14,6 +14,7 @@ import {
     getArticleSchema,
     updateArticleSchema,
 } from '../validators/article.validators'
+import { authMiddleware } from '../middlewares.ts/auth'
 
 const router = Router()
 
@@ -21,6 +22,7 @@ const router = Router()
 router.post(
     '/',
     validateRequest(createArticleSchema, 'body'),
+    authMiddleware,
     createArticleController
 )
 
@@ -28,20 +30,30 @@ router.post(
 router.get(
     '/all/:userId',
     validateRequest(getAllArticleForUserSchema, 'params'),
+    authMiddleware,
+
     listArticlesController
 )
 
 router.get(
     '/:userId/:articleId',
     validateRequest(getArticleSchema, 'params'),
+    authMiddleware,
+
     getArticleController
 )
 
-router.put('/', validateRequest(updateArticleSchema), updateArticleController)
+router.put(
+    '/',
+    validateRequest(updateArticleSchema),
+    authMiddleware,
+    updateArticleController
+)
 
 router.delete(
     '/:userId/:articleId',
     validateRequest(getArticleSchema, 'params'),
+    authMiddleware,
     deleteArticleController
 )
 
