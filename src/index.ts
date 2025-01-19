@@ -1,4 +1,4 @@
-import express, { Application, Request, Response } from 'express'
+import express, { Application } from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import articleRoutes from './routes/article.routes'
@@ -6,6 +6,7 @@ import authRoutes from './routes/auth.routes'
 
 import logger from './utils/logger'
 import { connectRedis } from './utils/redisClient'
+import { errorHandler } from './middlewares.ts/errorHandler'
 
 const app: Application = express()
 const port = 8000
@@ -20,14 +21,7 @@ app.use('/articles', articleRoutes)
 app.use('/auth', authRoutes)
 
 // Error Handling Middleware
-app.use((err: any, req: Request, res: Response) => {
-    const statusCode = err.status || 500
-    res.status(statusCode).json({
-        error: {
-            message: err.message || 'Internal Server Error',
-        },
-    })
-})
+app.use(errorHandler)
 
 export async function startServer() {
     try {

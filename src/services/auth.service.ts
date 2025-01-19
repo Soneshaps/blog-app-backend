@@ -3,6 +3,7 @@ import { findUserByEmail } from './user.service'
 import logger from '../utils/logger'
 import { createUserFor } from '../models/auth.model'
 import jwt from 'jsonwebtoken'
+import { AppError } from '../utils/appError'
 
 const SALT_ROUNDS = 10
 export const JWT_SECRET = process.env.JWT_SECRET || 'super_secret_key'
@@ -23,7 +24,8 @@ export async function createUser(
         const existing = await findUserByEmail(email)
         if (existing) {
             logger.error('User already exist for :', { username, email })
-            throw new Error('User already exists')
+
+            throw new AppError('User already exists', 400)
         }
 
         logger.info('Encrypting password')
@@ -38,7 +40,10 @@ export async function createUser(
         return { message: 'Successfully Created a user' }
     } catch (err) {
         logger.error('Error while creating a user :', err)
-        throw new Error('Error while creating a user')
+
+        throw err instanceof AppError
+            ? err
+            : new AppError('Error while creating a user', 500)
     }
 }
 
@@ -48,9 +53,9 @@ export async function loginUser(email: string, plainPassword: string) {
 
         const user = await findUserByEmail(email)
         if (!user) {
-            logger.error('User does not already exist for :', { email })
+            logger.error('User not found for :', { email })
 
-            throw new Error('User not found')
+            throw new AppError('User not found', 404)
         }
 
         logger.info('Validating password')
@@ -59,7 +64,7 @@ export async function loginUser(email: string, plainPassword: string) {
         if (!isValid) {
             logger.error('Invalid credentials')
 
-            throw new Error('Invalid credentials')
+            throw new AppError('Invalid credentials', 400)
         }
 
         const token = jwt.sign(
@@ -72,6 +77,8 @@ export async function loginUser(email: string, plainPassword: string) {
     } catch (err) {
         logger.error('Error while login user :', err)
 
-        throw new Error('Error while login user')
+        throw err instanceof AppError
+            ? err
+            : new AppError('Error while logging user', 500)
     }
 }

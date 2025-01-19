@@ -9,6 +9,7 @@ import {
 } from '../models/article.model'
 import logger from '../utils/logger'
 import { redisClient } from '../utils/redisClient'
+import { AppError } from '../utils/appError'
 
 /**
  * Create a new Article
@@ -21,7 +22,7 @@ export async function createArticle(
     try {
         if (!userId || !title || !content) {
             logger.info('Missing Required field to create a new article')
-            throw new Error('Missing required fields.')
+            throw new AppError('Missing required fields.', 400)
         }
         logger.info('Creating a new article for userId:', { userId })
 
@@ -43,7 +44,10 @@ export async function createArticle(
         return item
     } catch (err) {
         logger.error('Failed to Create a new article:', err)
-        throw new Error('Failed to Create a new article')
+
+        throw err instanceof AppError
+            ? err
+            : new AppError('Failed to Create a new article', 500)
     }
 }
 
@@ -54,6 +58,11 @@ export async function getArticle(userId: string, articleId: string) {
     try {
         if (!userId || !articleId) {
             logger.error('Missing Required field to create a new article')
+
+            throw new AppError(
+                'Missing Required field to create a new article.',
+                400
+            )
         }
 
         const cacheKey = `article:${articleId}`
@@ -78,7 +87,10 @@ export async function getArticle(userId: string, articleId: string) {
         return article
     } catch (err) {
         logger.error('Failed to fetch article for user:', err)
-        throw new Error('Failed to fetch article for user')
+
+        throw err instanceof AppError
+            ? err
+            : new AppError('Failed to fetch article for user', 500)
     }
 }
 
@@ -94,7 +106,7 @@ export async function updateArticle(
     try {
         if (!userId || !articleId || !title || !content) {
             logger.error('Missing Required field to update the article')
-            throw new Error('Missing required fields.')
+            throw new AppError('Missing required fields.', 400)
         }
 
         logger.info('Verify a article exist for id: ', { articleId })
@@ -114,7 +126,10 @@ export async function updateArticle(
         return updated
     } catch (err) {
         logger.error('Failed to update the article:', err)
-        throw new Error('Failed to update the article')
+
+        throw err instanceof AppError
+            ? err
+            : new AppError('Failed to update the article', 500)
     }
 }
 
@@ -125,7 +140,7 @@ export async function deleteArticle(userId: string, articleId: string) {
     try {
         if (!userId || !articleId) {
             logger.error('Missing Required field to delete the article')
-            throw new Error('Missing userId or articleId.')
+            throw new AppError('Missing userId or articleId.', 400)
         }
 
         logger.info('Verify a article exist for id: ', { articleId })
@@ -143,7 +158,10 @@ export async function deleteArticle(userId: string, articleId: string) {
         return { message: 'Article Deleted Successfully' }
     } catch (err) {
         logger.error('Failed to delete the article:', err)
-        throw new Error('Failed to delete the article')
+
+        throw err instanceof AppError
+            ? err
+            : new AppError('Failed to delete the article', 500)
     }
 }
 
@@ -155,14 +173,17 @@ export async function listArticles(userId: string) {
         if (!userId) {
             logger.error('Missing Required field to fetch the articles')
 
-            throw new Error('Missing userId.')
+            throw new AppError('Missing userId.', 400)
         }
         logger.info('Listing all article for userId: ', { userId })
 
         return await listArticlesByUser(userId)
     } catch (err) {
         logger.error('Failed to fetch all article for the user:', err)
-        throw new Error('Failed to fetch all article for the user')
+
+        throw err instanceof AppError
+            ? err
+            : new AppError('Failed to fetch all article for the user', 500)
     }
 }
 
@@ -174,6 +195,7 @@ export async function listArticlesGlobalByDate() {
         return await listAllArticlesSortedByDate()
     } catch (err) {
         logger.error('Failed to fetch global article:', err)
-        throw new Error('Failed to fetch global article')
+
+        throw new AppError('Failed to fetch global article', 500)
     }
 }

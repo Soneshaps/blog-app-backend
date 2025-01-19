@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 import { AnyObjectSchema } from 'yup'
+import { sendResponse } from '../utils/response'
 
 type ValidateSource = 'body' | 'query' | 'params'
 
@@ -37,7 +38,7 @@ export function validateRequest(
                 validationErrors.push(err.message)
             }
 
-            res.status(400).json({ errors: validationErrors })
+            sendResponse(res, 400, { message: validationErrors })
         }
     }
 }

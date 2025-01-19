@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { createUser, loginUser } from '../services/auth.service'
+import { sendResponse } from '../utils/response'
 
 export async function createUserController(
     req: Request,
@@ -7,10 +8,11 @@ export async function createUserController(
 ): Promise<any> {
     try {
         const { username, email, password } = req.body
-        const newItem = await createUser(username, email, password)
-        return res.status(201).json(newItem)
+        const result = await createUser(username, email, password)
+
+        sendResponse(res, 201, result)
     } catch (error: any) {
-        return res.status(400).json({ error: error.message })
+        sendResponse(res, error.statusCode || 500, { message: error.message })
     }
 }
 
@@ -20,9 +22,10 @@ export async function loginController(
 ): Promise<any> {
     try {
         const { email, password } = req.body
-        const newItem = await loginUser(email, password)
-        return res.status(201).json(newItem)
+        const result = await loginUser(email, password)
+
+        sendResponse(res, 201, result)
     } catch (error: any) {
-        return res.status(400).json({ error: error.message })
+        sendResponse(res, error.statusCode || 500, { message: error.message })
     }
 }

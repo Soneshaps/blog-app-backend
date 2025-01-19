@@ -7,6 +7,7 @@ import {
     listArticles,
     listArticlesGlobalByDate,
 } from '../services/article.service'
+import { sendResponse } from '../utils/response'
 
 export async function createArticleController(
     req: Request,
@@ -14,10 +15,11 @@ export async function createArticleController(
 ): Promise<any> {
     try {
         const { userId, title, content } = req.body
-        const newItem = await createArticle(userId, title, content)
-        return res.status(201).json(newItem)
+        const result = await createArticle(userId, title, content)
+
+        sendResponse(res, 201, result)
     } catch (error: any) {
-        return res.status(400).json({ error: error.message })
+        sendResponse(res, error.statusCode || 500, { message: error.message })
     }
 }
 
@@ -28,13 +30,13 @@ export async function getArticleController(
     try {
         const { userId, articleId } = req.params
 
-        const item = await getArticle(userId, articleId)
-        if (!item) {
-            return res.status(404).json({ error: 'Article not found.' })
+        const result = await getArticle(userId, articleId)
+        if (!result) {
+            sendResponse(res, 404, { message: 'Article Not Found' })
         }
-        return res.status(200).json(item)
+        sendResponse(res, 200, result)
     } catch (error: any) {
-        return res.status(400).json({ error: error.message })
+        sendResponse(res, error.statusCode || 500, { message: error.message })
     }
 }
 
@@ -44,15 +46,11 @@ export async function updateArticleController(
 ): Promise<any> {
     try {
         const { title, content, userId, articleId } = req.body
-        const updatedItem = await updateArticle(
-            userId,
-            articleId,
-            title,
-            content
-        )
-        return res.status(200).json(updatedItem)
+        const result = await updateArticle(userId, articleId, title, content)
+
+        sendResponse(res, 201, result)
     } catch (error: any) {
-        return res.status(400).json({ error: error.message })
+        sendResponse(res, error.statusCode || 500, { message: error.message })
     }
 }
 
@@ -62,11 +60,11 @@ export async function deleteArticleController(
 ): Promise<any> {
     try {
         const { userId, articleId } = req.params
-        const response = await deleteArticle(userId, articleId)
+        const result = await deleteArticle(userId, articleId)
 
-        return res.status(200).json(response)
+        sendResponse(res, 200, result)
     } catch (error: any) {
-        return res.status(400).json({ error: error.message })
+        sendResponse(res, error.statusCode || 500, { message: error.message })
     }
 }
 
@@ -76,10 +74,10 @@ export async function listArticlesController(
 ): Promise<any> {
     try {
         const { userId } = req.params
-        const articles = await listArticles(userId)
-        return res.status(200).json(articles)
+        const result = await listArticles(userId)
+        sendResponse(res, 200, result)
     } catch (error: any) {
-        return res.status(400).json({ error: error.message })
+        sendResponse(res, error.statusCode || 500, { message: error.message })
     }
 }
 
@@ -88,12 +86,10 @@ export async function listAllArticlesByDateController(
     res: Response
 ): Promise<any> {
     try {
-        // Possibly read query params or handle pagination
-        const articles = await listArticlesGlobalByDate()
-        return res.status(200).json(articles)
+        // TODO:  pagination
+        const result = await listArticlesGlobalByDate()
+        sendResponse(res, 200, result)
     } catch (error: any) {
-        return res.status(500).json({
-            error: error.message || 'Failed to list articles globally by date.',
-        })
+        sendResponse(res, error.statusCode || 500, { message: error.message })
     }
 }
